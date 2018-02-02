@@ -73,11 +73,10 @@ xvalknn(mlb, 5, c(4 ,6), 5, 2/3)
 # mean error 14.86746
 ``` 
 
-
 ```{r}
 ####1.22.2####
-library(readr)
-prgeng <- read_csv("~/Desktop/MSBA Winter/BAX 452 Machine Learning/Session 4/MLDatasets/prgeng.csv")
+setwd("Desktop/MSBA Winter/BAX 452 Machine Learning/Session 4/MLDatasets/")
+prgeng=read.csv("prgeng.csv")
 #include interaction between age gender, age^2 and gender
 age2=prgeng$age^2
 edu=prgeng$educ
@@ -89,15 +88,16 @@ prgeng$fem=prgeng$sex-1
 # not include wkswrkd as a variable since the sencond question doesn't include it; install pakage pracma
 lm_out=lm(wageinc~age+age2+ms+phd+fem+age:fem+age2:fem,data=prgeng)
 dot(as.matrix(lm_out$coefficients),cbind(1,32,32^2,1,0,1,32,32^2))
+# wage income for a 32-year-old woman with ms degree is $59708.15
 ```
 
 ```{r}
 ####1.22.3####
-prgeng <- read_csv("~/Desktop/MSBA Winter/BAX 452 Machine Learning/Session 4/MLDatasets/prgeng.csv")
+setwd("Desktop/MSBA Winter/BAX 452 Machine Learning/Session 4/MLDatasets/")
+bodyfat=read.csv("bodyfat.csv")
 out_bodyfat=lm(density~ siri+neck+chest+abdomen+hip+thigh+knee+ankle+biceps+forearm+wrist,bodyfat)
 summary(out_bodyfat)
 ## By checking the p-value of each variable, some variables like knee, height, chest, ankle, biceps are not significant. Since the adjusted r-square is greater than 0.7, the indirect model is feasible. However, if we use this method, we should measure the correlation between each parameter and estimate, test the dependency or independency between each parameter, as well as the linearity, and choose the appropriate dummy variables.
-
 ```
 
 ```{r}
@@ -133,7 +133,8 @@ c(-10276.797+-4157.253-1.96*(804.498+1728.329),-10276.797+- 4157.253
 
 ```{r}
 ####2.14.2####
-day <- read_csv("~/Desktop/MSBA Winter/BAX 452 Machine Learning/Session 4/MLDatasets/Bike-Sharing-Dataset/day.csv")
+setwd("Desktop/MSBA Winter/BAX 452 Machine Learning/Session 4/MLDatasets/")
+day <- read.csv("Bike-Sharing-Dataset/day.csv")
 day$temp2=day$temp^2
 day$clearday=as.integer(day$weathersit==1)
 names(day)[15]="reg"
@@ -146,7 +147,7 @@ c(1716.25-56.68*1.96, 1716.25+56.68*1.96)
 
 ```{r}
 ####2.14.3####
-# why each Di is (k???1)-variate normal
+# why each Di is (k-1)-variate normal
 # Proof: 
 # Let U= (Hi2,...,Hik)' , V= (Hi1,...,Hik-1)' , given U~N(muU, sigmaU^2 ), V~N(muV, sigmaV^2 )
 # then, Di=U-V   # note U start at Hi2 instead of Hi1
@@ -177,5 +178,5 @@ c(1716.25-56.68*1.96, 1716.25+56.68*1.96)
 #  smm$r.squared
 #}
 # use simr2(250,8,1000) in console, R^2 near 0.5
-# ??2=1-Var(E)/Var(Y)=1-Var(E)/Var(mean(x)+Var(E)=1-rho/2*rho=0.5
+# rho^2=1-Var(E)/Var(Y)=1-Var(E)/Var(mean(x)+Var(E)=1-rho/2*rho=0.5
 ```
